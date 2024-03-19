@@ -29,7 +29,7 @@ namespace Route.Session3.PL
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer("Data Source=KAREEM\\MSSQLSERVER04;Initial Catalog=MVCApplication;Integrated Security=True; TrustServerCertificate = true");
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
         }
 
