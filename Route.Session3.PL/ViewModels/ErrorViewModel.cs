@@ -1,6 +1,6 @@
 using System;
 
-namespace Route.Session3.PL.Models
+namespace Route.Session3.PL.ViewModels
 {
     public class ErrorViewModel
     {
