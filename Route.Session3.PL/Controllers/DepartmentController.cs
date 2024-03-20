@@ -14,7 +14,8 @@ namespace Route.Session3.PL.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var departments = _departmentRepository.GetAll();
+            return View(departments);
         }
     }
 }
