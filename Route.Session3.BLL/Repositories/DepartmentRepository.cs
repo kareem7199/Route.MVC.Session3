@@ -10,7 +10,7 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Repositories
 {
-    internal class DepartmentRepository : IDepatmentRepository
+    public class DepartmentRepository : IDepatmentRepository
     {
         private readonly ApplicationDbContext _dbContext;
         public DepartmentRepository(ApplicationDbContext dbContext)

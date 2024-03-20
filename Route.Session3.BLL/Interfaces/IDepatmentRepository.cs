@@ -7,7 +7,7 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Interfaces
 {
-    internal interface IDepatmentRepository
+    public interface IDepatmentRepository
     {
         IEnumerable<Department> GetAll();
         Department Get(int id);

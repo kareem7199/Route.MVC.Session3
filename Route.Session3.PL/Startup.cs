@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Route.Session3.BLL.Interfaces;
+using Route.Session3.BLL.Repositories;
 using Route.Session3.DAL.Data;
 
 namespace Route.Session3.PL
@@ -27,6 +29,7 @@ namespace Route.Session3.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IDepatmentRepository,DepartmentRepository>();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
