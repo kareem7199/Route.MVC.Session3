@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Route.Session3.PL.Models;
+using Route.Session3.PL.ViewModels;
 
 namespace Route.Session3.PL.Controllers
 {
