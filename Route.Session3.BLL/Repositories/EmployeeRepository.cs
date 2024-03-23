@@ -10,9 +10,9 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Repositories
 {
-    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
+    public class IEmployeeRepository : GenericRepository<Employee>, Interfaces.IEmployeeRepository
     {
-        public EmployeeRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public IEmployeeRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
