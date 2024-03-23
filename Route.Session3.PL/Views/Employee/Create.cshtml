@@ -48,7 +48,11 @@
 		<input asp-for="HiringDate" class="form-control" />
 		<span asp-validation-for="HiringDate" class="text-danger"></span>
 	</div>
-	<input type="submit" value="Create" class="btn btn-primary"/> |
+	<input type="submit" value="Create" class="btn btn-primary" /> |
 	<a asp-action="Index" class="btn btn-light">Back To List</a>
 </form>
 
+@section validationScriptsSection {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
