@@ -18,17 +18,17 @@ namespace Route.Session3.DAL.Data.Configurations
 
             builder.Property(E => E.Salary).HasColumnType("decimal(12,2)");
 
-            builder.Property(E => E.Gender)
-                    .HasConversion(
-                    (Gender) => Gender.ToString(),
-                    (GenderAsString) => (Gender) Enum.Parse(typeof(Gender), GenderAsString)
-                    );
+            //builder.Property(E => E.Gender)
+            //        .HasConversion(
+            //        (Gender) => Gender.ToString(),
+            //        (GenderAsString) => (Gender) Enum.Parse(typeof(Gender), GenderAsString)
+            //        );
 
-            builder.Property(E => E.EmployeeType)
-                    .HasConversion(
-                    (Type) => Type.ToString(),
-                    (TypeAsString) => (EmpType) Enum.Parse(typeof(Type), TypeAsString)
-                    );
+            //builder.Property(E => E.EmployeeType)
+            //        .HasConversion(
+            //        (Type) => Type.ToString(),
+            //        (TypeAsString) => (EmpType) Enum.Parse(typeof(Type), TypeAsString)
+            //        );
         }
     }
 }
