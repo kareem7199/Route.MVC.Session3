@@ -59,6 +59,7 @@ namespace Route.Session3.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit([FromRoute]int id , Department department)
         {
 
