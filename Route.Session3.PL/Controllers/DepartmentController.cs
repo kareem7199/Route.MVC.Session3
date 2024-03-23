@@ -60,10 +60,10 @@ namespace Route.Session3.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute]int id , Department department)
+        public IActionResult Edit([FromRoute] int id, Department department)
         {
 
-            if(id != department.Id)
+            if (id != department.Id)
                 return BadRequest();
 
             if (!ModelState.IsValid)
@@ -85,6 +85,34 @@ namespace Route.Session3.PL.Controllers
 
                 return View(department);
             }
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+
+            var department = _departmentRepository.Get(id.Value);
+
+            if (department is null)
+                return NotFound();
+
+            try
+            {
+                _departmentRepository.Delete(department);
+            }
+            catch (Exception ex)
+            {
+                if (_env.IsDevelopment())
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                else
+                    ModelState.AddModelError(string.Empty, "An Error Has Occurred during Deleting the department");
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
