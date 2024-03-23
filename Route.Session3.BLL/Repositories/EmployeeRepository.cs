@@ -4,46 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Route.Session3.BLL.Interfaces;
 using Route.Session3.DAL.Data;
 using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Repositories
 {
-    internal class EmployeeRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
-        private readonly ApplicationDbContext _dbContext;
-        public EmployeeRepository(ApplicationDbContext dbContext)
+        public EmployeeRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
-        }
-        public int Add(Employee entity)
-        {
-            _dbContext.Add(entity);
-            return _dbContext.SaveChanges();
         }
 
-        public int Delete(Employee entity)
+        public IQueryable<Employee> GetEmployeesByAddress(string address)
         {
-            _dbContext.Remove(entity);
-            return _dbContext.SaveChanges();
-        }
-
-        public Employee Get(int id)
-        {
-            ///var Employee = _dbContext.Employees.Local.Where(D => D.Id == id).FirstOrDefault();
-            ///if(Employee == null)
-            ///    Employee = _dbContext.Employees.Where(D => D.Id == id).FirstOrDefault();
-            ///return Employee;
-            return _dbContext.Employees.Find(id);
-        }
-
-        public IEnumerable<Employee> GetAll()
-            => _dbContext.Employees.AsNoTracking().ToList();
-
-        public int Update(Employee entity)
-        {
-            _dbContext.Update(entity);
-            return _dbContext.SaveChanges();
+            return _dbContext.Employees.Where(E => E.Address.Equals(address, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

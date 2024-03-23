@@ -25,9 +25,8 @@ namespace Route.Session3.DAL.Models
         PartTime = 2
     }
 
-    public class Employee
+    public class Employee : ModelBase
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Max Length of name is 50 chars")]
         [MinLength(5, ErrorMessage = "Min Length of name is 5 chars")]
