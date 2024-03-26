@@ -8,50 +8,49 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.PL.Controllers
 {
-    public class DepartmentController : Controller
+    public class EmployeeController : Controller
     {
-        private readonly IDepatmentRepository _departmentRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment _env;
 
-        public DepartmentController(IDepatmentRepository depatmentRepository, IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepository, IWebHostEnvironment env)
         {
-            _departmentRepository = depatmentRepository;
+            _employeeRepository = employeeRepository;
             _env = env;
         }
         public IActionResult Index()
         {
-            var departments = _departmentRepository.GetAll();
-            return View(departments);
+            var employees = _employeeRepository.GetAll();
+            return View(employees);
         }
-
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(Employee employee)
         {
             if (ModelState.IsValid) // server side validation
             {
-                var count = _departmentRepository.Add(department);
+                var count = _employeeRepository.Add(employee);
                 if (count > 0)
                     return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(employee);
         }
 
         public IActionResult Details(int? id, string ViewName = "Details")
         {
             if (id is null)
                 return BadRequest();
-            var department = _departmentRepository.Get(id.Value);
+            var employee = _employeeRepository.Get(id.Value);
 
-            if (department is null)
+            if (employee is null)
                 return NotFound();
 
-            return View(ViewName, department);
+            return View(ViewName, employee);
         }
+
 
         public IActionResult Edit(int? id)
         {
@@ -60,18 +59,18 @@ namespace Route.Session3.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int id, Department department)
+        public IActionResult Edit([FromRoute] int id, Employee employee)
         {
 
-            if (id != department.Id)
+            if (id != employee.Id)
                 return BadRequest();
 
             if (!ModelState.IsValid)
-                return View(department);
+                return View(employee);
 
             try
             {
-                _departmentRepository.Update(department);
+                _employeeRepository.Update(employee);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -81,9 +80,9 @@ namespace Route.Session3.PL.Controllers
                 if (_env.IsDevelopment())
                     ModelState.AddModelError(string.Empty, ex.Message);
                 else
-                    ModelState.AddModelError(string.Empty, "An Error Has Occurred during Updating the department");
+                    ModelState.AddModelError(string.Empty, "An Error Has Occurred during Updating the employee");
 
-                return View(department);
+                return View(employee);
             }
         }
 
@@ -93,26 +92,27 @@ namespace Route.Session3.PL.Controllers
             if (!id.HasValue)
                 return BadRequest();
 
-            var department = _departmentRepository.Get(id.Value);
+            var employee = _employeeRepository.Get(id.Value);
 
-            if (department is null)
+            if (employee is null)
                 return NotFound();
 
             try
             {
-                _departmentRepository.Delete(department);
+                _employeeRepository.Delete(employee);
             }
             catch (Exception ex)
             {
                 if (_env.IsDevelopment())
                     ModelState.AddModelError(string.Empty, ex.Message);
                 else
-                    ModelState.AddModelError(string.Empty, "An Error Has Occurred during Deleting the department");
+                    ModelState.AddModelError(string.Empty, "An Error Has Occurred during Deleting the employee");
 
                 return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

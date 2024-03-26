@@ -30,7 +30,9 @@ namespace Route.Session3.PL
         {
             services.AddControllersWithViews();
             services.AddScoped<IDepatmentRepository,DepartmentRepository>();
-            services.AddDbContext<ApplicationDbContext>(options =>
+			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+			services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });

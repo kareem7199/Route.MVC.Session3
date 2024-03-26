@@ -7,7 +7,8 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Interfaces
 {
-    public interface IDepatmentRepository : IGenericRepository<Department>
+    public interface IEmployeeRepository : IGenericRepository<Employee>
     {
+        IQueryable<Employee> GetEmployeesByAddress(string address);
     }
 }
