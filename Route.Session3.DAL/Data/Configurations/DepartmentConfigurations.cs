@@ -15,6 +15,10 @@ namespace Route.Session3.DAL.Data.Configurations
             builder.Property(D => D.Id).UseIdentityColumn(10, 10);
             builder.Property(D => D.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
             builder.Property(D => D.Code).IsRequired().HasColumnType("varchar").HasMaxLength(50);
+            builder.HasMany(D => D.Employees)
+                   .WithOne(D => D.Department)
+                   .HasForeignKey(E => E.DepartmentId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
