@@ -33,8 +33,13 @@ namespace Route.Session3.PL.Controllers
             if (ModelState.IsValid) // server side validation
             {
                 var count = _employeeRepository.Add(employee);
+                
                 if (count > 0)
-                    return RedirectToAction(nameof(Index));
+                    TempData["Message"] = "Employee is Created Successfully";
+                else
+                    TempData["Message"] = "An Error Has Occured, Employee Not Created :(";
+
+                return RedirectToAction(nameof(Index));
             }
             return View(employee);
         }
