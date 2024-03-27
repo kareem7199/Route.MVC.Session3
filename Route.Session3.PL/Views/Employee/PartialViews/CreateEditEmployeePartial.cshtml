@@ -1,4 +1,4 @@
-﻿@model Employee
+﻿@model EmployeeViewModel
 @inject IDepatmentRepository _departmentRepo
 @{
 	var departments = new SelectList(_departmentRepo.GetAll(), nameof(Department.Id), nameof(Department.Name));
