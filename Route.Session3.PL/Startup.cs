@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Route.Session3.BLL.Interfaces;
 using Route.Session3.BLL.Repositories;
 using Route.Session3.DAL.Data;
+using Route.Session3.PL.Extensions;
 
 namespace Route.Session3.PL
 {
@@ -29,13 +30,14 @@ namespace Route.Session3.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddScoped<IDepatmentRepository,DepartmentRepository>();
-			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
 
 			services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
