@@ -23,5 +23,8 @@ namespace Route.Session3.BLL.Repositories
 
 		public override IEnumerable<Employee> GetAll()
 		=> _dbContext.Employees.Include(E => E.Department).ToList();
+
+        public IQueryable<Employee> SearchByName(string name)
+            => _dbContext.Employees.Where(E => E.Name.ToLower().Contains(name.ToLower())).Include(E => E.Department);
 	}
 }
