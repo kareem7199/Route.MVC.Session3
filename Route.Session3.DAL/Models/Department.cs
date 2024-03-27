@@ -16,6 +16,6 @@ namespace Route.Session3.DAL.Models
         public string Description { get; set; }
 
         // Navigational Property 
-        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
+        public virtual ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
     }
 }

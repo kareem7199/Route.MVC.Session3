@@ -64,6 +64,6 @@ namespace Route.Session3.DAL.Models
         public int? DepartmentId { get; set; } // Foreign Key
 
         // Navigational Property
-        public Department Department { get; set; }
+        public virtual Department Department { get; set; }
     }
 }
