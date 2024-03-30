@@ -15,23 +15,24 @@ namespace Route.Session3.PL.Controllers
 	public class EmployeeController : Controller
 	{
 		private readonly IMapper _mapper;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _env;
 
 		public EmployeeController(IMapper mapper , IUnitOfWork unitOfWork, IWebHostEnvironment env)
 		{
 			_mapper = mapper;
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
             _env = env;
 		}
 		public IActionResult Index(string searchInput)
 		{
 			var employees = Enumerable.Empty<Employee>();
+			var employeeRepo = _unitOfWork.Repository<Employee>() as EmployeeRepository;
 
 			if (string.IsNullOrEmpty(searchInput))
-				employees = unitOfWork.EmployeeRepository.GetAll();
+				employees = employeeRepo.GetAll();
 			else
-				employees = unitOfWork.EmployeeRepository.SearchByName(searchInput);
+				employees = employeeRepo.SearchByName(searchInput);
 
 			var mappedEmps = _mapper.Map<IEnumerable<Employee> , IEnumerable<EmployeeViewModel>>(employees);
 
@@ -48,10 +49,10 @@ namespace Route.Session3.PL.Controllers
 			{
 
 				var employee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
-                unitOfWork.EmployeeRepository.Add(employee);
-                var count = unitOfWork.Complete();
+                _unitOfWork.Repository<Employee>().Add(employee);
+				var count = _unitOfWork.Complete();
 
-                if (count > 0)
+				if (count > 0)
 					TempData["Message"] = "Employee is Created Successfully";
 				else
 					TempData["Message"] = "An Error Has Occured, Employee Not Created :(";
@@ -65,7 +66,7 @@ namespace Route.Session3.PL.Controllers
 		{
 			if (id is null)
 				return BadRequest();
-			var employee = unitOfWork.EmployeeRepository.Get(id.Value);
+			var employee = _unitOfWork.Repository<Employee>().Get(id.Value);
 
 			if (employee is null)
 				return NotFound();
@@ -92,9 +93,9 @@ namespace Route.Session3.PL.Controllers
 			try
 			{
 				var employee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
-                unitOfWork.EmployeeRepository.Update(employee);
-                unitOfWork.Complete();
-                return RedirectToAction(nameof(Index));
+                _unitOfWork.Repository<Employee>().Update(employee);
+				_unitOfWork.Complete();
+				return RedirectToAction(nameof(Index));
 			}
 			catch (Exception ex)
 			{
@@ -115,14 +116,14 @@ namespace Route.Session3.PL.Controllers
 			if (!id.HasValue)
 				return BadRequest();
 
-			var employee = unitOfWork.EmployeeRepository.Get(id.Value);
+			var employee = _unitOfWork.Repository<Employee>().Get(id.Value);
 
 			if (employee is null)
 				return NotFound();
 
 			try
 			{
-                unitOfWork.EmployeeRepository.Delete(employee);
+                _unitOfWork.Repository<Employee>().Delete(employee);
 			}
 			catch (Exception ex)
 			{

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Route.Session3.BLL.Repositories;
+using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Interfaces
 {
     public interface IUnitOfWork
     {
-        public IEmployeeRepository EmployeeRepository { get; set; }
-        public IDepatmentRepository DepartmentRepository { get; set; }
-        public int Complete();
+		IGenericRepository<T> Repository<T>() where T : ModelBase;
+		public int Complete();
     }
 }
