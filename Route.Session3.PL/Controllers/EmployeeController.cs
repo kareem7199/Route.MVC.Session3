@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Route.Session3.BLL.Interfaces;
 using Route.Session3.BLL.Repositories;
 using Route.Session3.DAL.Models;
+using Route.Session3.PL.Helpers;
 using Route.Session3.PL.ViewModels;
 
 namespace Route.Session3.PL.Controllers
@@ -48,12 +50,16 @@ namespace Route.Session3.PL.Controllers
 			if (ModelState.IsValid) // server side validation
 			{
 
+				employeeVm.ImageName = DocumentSettings.UploadFile(employeeVm.Image , "images");
+				
 				var employee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
                 _unitOfWork.Repository<Employee>().Add(employee);
 				var count = _unitOfWork.Complete();
 
 				if (count > 0)
+				{
 					TempData["Message"] = "Employee is Created Successfully";
+				}
 				else
 					TempData["Message"] = "An Error Has Occured, Employee Not Created :(";
 

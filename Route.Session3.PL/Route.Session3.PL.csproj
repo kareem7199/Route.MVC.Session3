@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Route.Session3.BLL\Route.Session3.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\files\images\" />
+  </ItemGroup>
+
 </Project>
