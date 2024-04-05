@@ -130,6 +130,11 @@ namespace Route.Session3.PL.Controllers
 			try
 			{
                 _unitOfWork.Repository<Employee>().Delete(employee);
+				var count = _unitOfWork.Complete();
+				if(count > 0)
+				{
+					DocumentSettings.DeleteFile(employee.ImageName , "images");
+				}
 			}
 			catch (Exception ex)
 			{
