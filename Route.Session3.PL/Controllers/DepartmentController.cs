@@ -1,27 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Route.Session3.BLL;
 using Route.Session3.BLL.Interfaces;
 using Route.Session3.BLL.Repositories;
 using Route.Session3.DAL.Models;
+using Route.Session3.PL.ViewModels;
 
 namespace Route.Session3.PL.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepatmentRepository _departmentRepository;
+        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentController(IDepatmentRepository depatmentRepository, IWebHostEnvironment env)
+        public DepartmentController(IMapper mapper , IUnitOfWork unitOfWork, IWebHostEnvironment env)
         {
-            _departmentRepository = depatmentRepository;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
             _env = env;
         }
         public IActionResult Index()
         {
-            var departments = _departmentRepository.GetAll();
-            return View(departments);
+			var departments = _unitOfWork.Repository<Department>().GetAll();
+			var mappedDeps = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentViewModel>>(departments);
+
+			return View(mappedDeps);
         }
 
         public IActionResult Create()
@@ -30,27 +38,31 @@ namespace Route.Session3.PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(DepartmentViewModel departmentVm)
         {
             if (ModelState.IsValid) // server side validation
             {
-                var count = _departmentRepository.Add(department);
-                if (count > 0)
-                    return RedirectToAction(nameof(Index));
-            }
-            return View(department);
+                var department = _mapper.Map<DepartmentViewModel, Department>(departmentVm);
+				_unitOfWork.Repository<Department>().Add(department);
+				_unitOfWork.Complete();
+				return RedirectToAction(nameof(Index));
+			}
+            return View(departmentVm);
         }
 
         public IActionResult Details(int? id, string ViewName = "Details")
         {
             if (id is null)
                 return BadRequest();
-            var department = _departmentRepository.Get(id.Value);
 
-            if (department is null)
+			var department = _unitOfWork.Repository<Department>().Get(id.Value);
+
+			if (department is null)
                 return NotFound();
 
-            return View(ViewName, department);
+            var mappedDep = _mapper.Map<Department , DepartmentViewModel>(department);
+
+            return View(ViewName, mappedDep);
         }
 
         public IActionResult Edit(int? id)
@@ -60,19 +72,19 @@ namespace Route.Session3.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int id, Department department)
+        public IActionResult Edit(DepartmentViewModel departmentVm)
         {
 
-            if (id != department.Id)
-                return BadRequest();
-
             if (!ModelState.IsValid)
-                return View(department);
+                return View(departmentVm);
+
 
             try
             {
-                _departmentRepository.Update(department);
-                return RedirectToAction(nameof(Index));
+                var department = _mapper.Map<DepartmentViewModel , Department>(departmentVm);
+				_unitOfWork.Repository<Department>().Update(department);
+				_unitOfWork.Complete();
+				return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -83,7 +95,7 @@ namespace Route.Session3.PL.Controllers
                 else
                     ModelState.AddModelError(string.Empty, "An Error Has Occurred during Updating the department");
 
-                return View(department);
+                return View(departmentVm);
             }
         }
 
@@ -93,15 +105,16 @@ namespace Route.Session3.PL.Controllers
             if (!id.HasValue)
                 return BadRequest();
 
-            var department = _departmentRepository.Get(id.Value);
+            var department = _unitOfWork.Repository<Department>().Get(id.Value);
 
             if (department is null)
                 return NotFound();
 
             try
             {
-                _departmentRepository.Delete(department);
-            }
+				_unitOfWork.Repository<Department>().Delete(department);
+				_unitOfWork.Complete();
+			}
             catch (Exception ex)
             {
                 if (_env.IsDevelopment())
