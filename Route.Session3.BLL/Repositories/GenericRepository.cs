@@ -32,7 +32,7 @@ namespace Route.Session3.BLL.Repositories
             return _dbContext.Find<T>(id);
         }
 
-        virtual public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
             => _dbContext.Set<T>().AsNoTracking().ToList();
 
         public void Update(T entity)

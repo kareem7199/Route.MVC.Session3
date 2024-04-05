@@ -26,5 +26,6 @@ namespace Route.Session3.BLL.Repositories
 
         public IQueryable<Employee> SearchByName(string name)
             => _dbContext.Employees.Where(E => E.Name.ToLower().Contains(name.ToLower())).Include(E => E.Department);
+
 	}
 }
