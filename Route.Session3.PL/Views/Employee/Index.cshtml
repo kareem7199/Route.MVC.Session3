@@ -37,13 +37,14 @@
 	<table class="mt-4 table table-striped table-hover">
 		<thead>
 			<tr>
+				<th>Image</th>
 				<th>@Html.DisplayNameFor(E => E.Name)</th>
 				<th>@Html.DisplayNameFor(E => E.Age)</th>
 				<th>@Html.DisplayNameFor(E => E.Department)</th>
 				<th>@Html.DisplayNameFor(E => E.Email)</th>
 				<th>@Html.DisplayNameFor(E => E.Salary)</th>
 				<th>@Html.DisplayNameFor(E => E.IsActive)</th>
-				<th>@Html.DisplayNameFor(E => E.Gender)</th>
+				@* <th>@Html.DisplayNameFor(E => E.Gender)</th> *@
 				<th>Details</th>
 				<th>Update</th>
 				<th>Delete</th>
@@ -53,13 +54,14 @@
 			@foreach (var employee in Model)
 			{
 				<tr>
+					<td><img src="~/files/images/@employee.ImageName" class="img-fluid rounded-circle" width="75" alt="Employee Image" /></td>
 					<td>@employee.Name</td>
 					<td>@employee.Age</td>
 					<td>@employee.Department?.Name</td>
 					<td>@Html.DisplayFor(D => employee.Email)</td>
 					<td>@Html.DisplayFor(D => employee.Salary)</td>
 					<td>@Html.DisplayFor(D => employee.IsActive)</td>
-					<td>@employee.Gender</td>
+					@* <td>@employee.Gender</td> *@
 					<partial name="_ButtonsPartial" model="@employee.Id" />
 				</tr>
 			}
