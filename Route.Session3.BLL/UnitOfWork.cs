@@ -12,7 +12,7 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL
 {
-    public class UnitOfWork : IUnitOfWork , IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext applicationDBContext;
 
