@@ -47,13 +47,10 @@ namespace Route.Session3.BLL
 			return _repositories[key] as IGenericRepository<T>;
 		}
 
-		public int Complete()
-        {
-            return applicationDBContext.SaveChanges();
-        }
-        public void Dispose()
-        {
-            applicationDBContext.Dispose();
-        }
-    }
+		public async Task<int> Complete()
+			=> await applicationDBContext.SaveChangesAsync();
+        
+        public async ValueTask DisposeAsync()
+			=> await applicationDBContext.DisposeAsync();
+	}
 }
