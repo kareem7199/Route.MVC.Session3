@@ -1,6 +1,7 @@
 ﻿using Route.Session3.DAL.Models;
 using System.ComponentModel.DataAnnotations;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Route.Session3.PL.ViewModels
 {
@@ -41,7 +42,11 @@ namespace Route.Session3.PL.ViewModels
 
 		public DateTime CreationDate { get; set; } = DateTime.Now;
 
-		public int? DepartmentId { get; set; } // Foreign Key
+        public IFormFile Image { get; set; }
+
+        public string ImageName { get; set; }
+
+        public int? DepartmentId { get; set; } // Foreign Key
 
 		// Navigational Property
 		public virtual Department Department { get; set; }

@@ -8,9 +8,9 @@ using Route.Session3.DAL.Models;
 
 namespace Route.Session3.BLL.Interfaces
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IAsyncDisposable
     {
 		IGenericRepository<T> Repository<T>() where T : ModelBase;
-		public int Complete();
+		Task <int> Complete();
     }
 }

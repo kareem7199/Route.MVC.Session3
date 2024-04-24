@@ -46,6 +46,8 @@ namespace Route.Session3.DAL.Models
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
+        public string ImageName { get; set; }
+
         public int? DepartmentId { get; set; } // Foreign Key
 
         // Navigational Property
