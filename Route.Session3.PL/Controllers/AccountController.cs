@@ -58,6 +58,7 @@ namespace Route.Session3.PL.Controllers
 
 		#endregion
 
+		#region Sign In
 		public IActionResult SignIn()
 			=> View();
 
@@ -71,19 +72,19 @@ namespace Route.Session3.PL.Controllers
 				if (user is not null)
 				{
 					var flag = await _userManager.CheckPasswordAsync(user, model.Password);
-					
+
 					if (flag)
 					{
 						var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-						
+
 						if (result.IsLockedOut)
 							ModelState.AddModelError(string.Empty, "Your account is locked!!");
 
 						if (result.IsNotAllowed)
 							ModelState.AddModelError(string.Empty, "Your account is not confirmed yet!!");
 
-						if(result.Succeeded)
-							return RedirectToAction(nameof(HomeController.Index) , "Home");
+						if (result.Succeeded)
+							return RedirectToAction(nameof(HomeController.Index), "Home");
 
 					}
 
@@ -91,9 +92,21 @@ namespace Route.Session3.PL.Controllers
 
 				ModelState.AddModelError(string.Empty, "Incorrect  Email or Password");
 			}
-			
+
 			return View(model);
 
 		}
+		#endregion
+
+		#region Sign Out
+
+		public async new Task<IActionResult> SignOut()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction(nameof(SignIn));
+		}
+
+
+		#endregion
 	}
 }
