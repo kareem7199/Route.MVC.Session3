@@ -56,14 +56,15 @@ namespace Route.Session3.PL
 
 				options.User.RequireUniqueEmail = true;
 
-			}).AddEntityFrameworkStores<ApplicationDbContext>();
+			}).AddEntityFrameworkStores<ApplicationDbContext>()
+			  .AddDefaultTokenProviders();
 
-			//services.ConfigureApplicationCookie(options =>
-			//{
-			//	options.LoginPath = "/Account/SignIn";
-			//	options.ExpireTimeSpan = TimeSpan.FromDays(1);
-			//	options.AccessDeniedPath = "/";
-			//});
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.LoginPath = "/Account/SignIn";
+				options.ExpireTimeSpan = TimeSpan.FromDays(1);
+				options.AccessDeniedPath = "/";
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
