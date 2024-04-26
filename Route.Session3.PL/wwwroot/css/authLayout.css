@@ -166,7 +166,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     font-family: 'Roboto', sans-serif;
 }
 
-input.email, input.hamada input.text.w3lpass , input[type = "text"] {
+input.email, .hamada , input.text.w3lpass , input[type = "text"] {
     margin: 2em 0;
 }
 

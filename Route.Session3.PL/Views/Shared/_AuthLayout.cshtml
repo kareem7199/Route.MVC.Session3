@@ -22,7 +22,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- main -->
 	<div class="main-w3layouts wrapper">
 		<h1>Creative @ViewData["Title"] Form</h1>
-		@RenderBody();
+		@RenderBody()
 		<!-- copyright -->
 		<div class="colorlibcopy-agile">
 			<p>© 2018 Colorlib Signup Form. All rights reserved | Design by <a href="https://colorlib.com/" target="_blank">Colorlib</a></p>
@@ -42,5 +42,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		</ul>
 	</div>
 	<!-- //main -->
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	@await RenderSectionAsync("validationScriptsSection", required: false)
+
 </body>
 </html>
+
